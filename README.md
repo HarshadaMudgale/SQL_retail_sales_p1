@@ -66,9 +66,8 @@ WHERE
     quantity IS NULL OR price_per_unit IS NULL OR cogs IS NULL;
 ```
 
-### 3. Data Analysis & Findings
+### 3. Data Analysis problems
 
-The following SQL queries were developed to answer specific business questions:
 
 1. **Write a SQL query to retrieve all columns for sales made on '2022-11-05**:
 ```sql
@@ -79,6 +78,13 @@ WHERE sale_date = '2022-11-05';
 
 2. **Write a SQL query to retrieve all transactions where the category is 'Clothing' and the quantity sold is more than 4 in the month of Nov-2022**:
 ```sql
+SELECT * FROM retail_sales
+WHERE (category = 'Clothing') 
+AND quantity >= 4
+AND (sale_date BETWEEN '2022-11-01' AND '2022-11-30');
+
+--OR
+
 SELECT 
   *
 FROM retail_sales
@@ -92,6 +98,11 @@ WHERE
 
 3. **Write a SQL query to calculate the total sales (total_sale) for each category.**:
 ```sql
+SELECT SUM(total_sale), category FROM retail_sales
+GROUP BY category;
+
+--OR
+
 SELECT 
     category,
     SUM(total_sale) as net_sale,
@@ -116,20 +127,25 @@ WHERE total_sale > 1000
 
 6. **Write a SQL query to find the total number of transactions (transaction_id) made by each gender in each category.**:
 ```sql
-SELECT 
-    category,
-    gender,
-    COUNT(*) as total_trans
+
+SELECT COUNT(*), gender, category
 FROM retail_sales
-GROUP 
-    BY 
-    category,
-    gender
-ORDER BY 1
+GROUP BY category, gender;
 ```
 
 7. **Write a SQL query to calculate the average sale for each month. Find out best selling month in each year**:
 ```sql
+SELECT 
+  EXTRACT(year FROM sale_date) AS year,
+--extract is only used in postgre, in mysql we use YEAR(sale_date)
+  EXTRACT(month FROM sale_date) AS month,
+  AVG(total_sale) AS avg_sale
+  FROM retail_sales
+  GROUP BY year, month
+  ORDER BY year, avg_sale DESC;
+
+--OR
+
 SELECT 
        year,
        month,
@@ -149,42 +165,34 @@ WHERE rank = 1
 
 8. **Write a SQL query to find the top 5 customers based on the highest total sales **:
 ```sql
-SELECT 
-    customer_id,
-    SUM(total_sale) as total_sales
+
+SELECT customer_id, SUM(total_sale) AS total_sale
 FROM retail_sales
-GROUP BY 1
-ORDER BY 2 DESC
-LIMIT 5
+GROUP by customer_id
+ORDER BY total_sale DESC
+LIMIT 5;
 ```
 
 9. **Write a SQL query to find the number of unique customers who purchased items from each category.**:
 ```sql
 SELECT 
     category,    
-    COUNT(DISTINCT customer_id) as cnt_unique_cs
+    COUNT(DISTINCT customer_id) as cust_id
 FROM retail_sales
-GROUP BY category
+GROUP BY category;
 ```
 
 10. **Write a SQL query to create each shift and number of orders (Example Morning <12, Afternoon Between 12 & 17, Evening >17)**:
 ```sql
-WITH hourly_sale
-AS
-(
-SELECT *,
-    CASE
-        WHEN EXTRACT(HOUR FROM sale_time) < 12 THEN 'Morning'
-        WHEN EXTRACT(HOUR FROM sale_time) BETWEEN 12 AND 17 THEN 'Afternoon'
-        ELSE 'Evening'
-    END as shift
-FROM retail_sales
-)
 SELECT 
-    shift,
-    COUNT(*) as total_orders    
-FROM hourly_sale
-GROUP BY shift
+ CASE
+  WHEN EXTRACT(HOUR FROM sale_time) < 12 THEN 'morning' 
+  WHEN EXTRACT(HOUR FROM sale_time) BETWEEN 12 AND 17 THEN  'afternoon' 
+  ELSE 'evening' 
+ END AS shift,
+ COUNT(*) AS total_orders
+FROM retail_sales
+GROUP BY shift;
 ```
 
 ## Findings
@@ -204,24 +212,13 @@ GROUP BY shift
 
 This project serves as a comprehensive introduction to SQL for data analysts, covering database setup, data cleaning, exploratory data analysis, and business-driven SQL queries. The findings from this project can help drive business decisions by understanding sales patterns, customer behavior, and product performance.
 
-## How to Use
 
-1. **Clone the Repository**: Clone this project repository from GitHub.
-2. **Set Up the Database**: Run the SQL scripts provided in the `database_setup.sql` file to create and populate the database.
-3. **Run the Queries**: Use the SQL queries provided in the `analysis_queries.sql` file to perform your analysis.
-4. **Explore and Modify**: Feel free to modify the queries to explore different aspects of the dataset or answer additional business questions.
 
-## Author - Zero Analyst
+## Author - Harshada Mudgale
 
-This project is part of my portfolio, showcasing the SQL skills essential for data analyst roles. If you have any questions, feedback, or would like to collaborate, feel free to get in touch!
+This project is part of my portfolio, showcasing the SQL skills essential for data analyst roles. 
 
-### Stay Updated and Join the Community
 
-For more content on SQL, data analysis, and other data-related topics, make sure to follow me on social media and join our community:
+ **LinkedIn**: https://www.linkedin.com/in/harshada-mudgale-ba279b243
 
-- **YouTube**: [Subscribe to my channel for tutorials and insights](https://www.youtube.com/@zero_analyst)
-- **Instagram**: [Follow me for daily tips and updates](https://www.instagram.com/zero_analyst/)
-- **LinkedIn**: [Connect with me professionally](https://www.linkedin.com/in/najirr)
-- **Discord**: [Join our community to learn and grow together](https://discord.gg/36h5f2Z5PK)
 
-Thank you for your support, and I look forward to connecting with you!
