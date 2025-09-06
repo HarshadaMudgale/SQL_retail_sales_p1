@@ -208,8 +208,19 @@ GROUP BY shift;
 - **Trend Analysis**: Insights into sales trends across different months and shifts.
 - **Customer Insights**: Reports on top customers and unique customer counts per category.
 
-## Conclusion
+## 📊 Power BI Dashboard
 
+Along with the SQL analysis, I built an interactive **Power BI dashboard** to visualize the retail sales data.  
+This dashboard highlights key metrics such as Total Sales, Profit, Transactions, Customers, and Quantity Sold.  
+It also provides insights by Category, Gender, and Age Group, with trends over time.
+
+### 🔗 Files
+- [Download Dashboard (.pbix)](Retail Sales Dashboard.pbix) 
+- [View Dashboard (PDF)](Retail Sales dashboard.pdf)  
+
+(The PDF shows all report pages. The `.pbix` file can be opened in Power BI Desktop to explore interactively.) 
+
+## Conclusion
 This project serves as a comprehensive introduction to SQL for data analysts, covering database setup, data cleaning, exploratory data analysis, and business-driven SQL queries. The findings from this project can help drive business decisions by understanding sales patterns, customer behavior, and product performance.
 
 
