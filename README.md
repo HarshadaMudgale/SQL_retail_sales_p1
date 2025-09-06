@@ -215,8 +215,8 @@ This dashboard highlights key metrics such as Total Sales, Profit, Transactions,
 It also provides insights by Category, Gender, and Age Group, with trends over time.
 
 ### 🔗 Files
-- [Download Dashboard (.pbix)](Retail Sales Dashboard.pbix) 
-- [View Dashboard (PDF)](Retail Sales dashboard.pdf)  
+- (Retail Sales Dashboard.pbix) 
+- (Retail Sales dashboard.pdf)  
 
 (The PDF shows all report pages. The `.pbix` file can be opened in Power BI Desktop to explore interactively.) 
 
